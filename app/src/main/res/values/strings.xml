@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Dog</string>
+    <string name="action_settings">Settings</string>
+    <string name="loja">Loja Virtual</string>
+    <string name="bem_vindo">Bem Vindo a Loja</string>
+    <string name="buscar">Buscar</string>
+    <string name="vistar">Visitar</string>
+    <string name="detalhes">Detalhes</string>
+</resources>
