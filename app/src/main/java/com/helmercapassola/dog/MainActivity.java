@@ -1,5 +1,6 @@
 package com.helmercapassola.dog;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -14,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -21,12 +24,17 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
 
+    Dialog dialog;
+    EditText new_title, new_desc;
+    ImageView new_image;
+    Button btn_save;
+
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
-    ImageView imageView;
 
 
-    private  ArrayList<Dog> dogs;
+
+   // private  ArrayList<Dog> dogs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+  /*
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setHasFixedSize(true);
 
@@ -43,27 +51,33 @@ public class MainActivity extends AppCompatActivity {
 
         dogs = new ArrayList<Dog>();
 
-        dogs.add(new Dog("LOja",  "Animal", R.drawable.pastorbelga));
-        dogs.add(new Dog("LOja1", "Animal", R.drawable.pastorbelga));
-        dogs.add(new Dog("LOja1", "Animal", R.drawable.pastorbelga));
-        dogs.add(new Dog("LOja1", "Animal", R.drawable.pastorbelga));
-        dogs.add(new Dog("LOja1", "Animal", R.drawable.pastorbelga));
-        dogs.add(new Dog("LOja1", "Animal", R.drawable.pastorbelga));
-
         adapter = new DogAdapter(dogs, this);
         recyclerView.setAdapter(adapter);
 
-        //imageView = findViewById(R.id.imageview);
+        //imageView = findViewById(R.id.imageview);*/
 
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+                DialogShow();
+
             }
         });
+    }
+
+
+    public void DialogShow(){
+
+        dialog = new Dialog(this);
+        dialog.setContentView(R.layout.add_item);
+
+        new_title = dialog.findViewById(R.id.new_title);
+        new_desc = dialog.findViewById(R.id.new_desc);
+        new_image = dialog.findViewById(R.id.new_image);
+        btn_save = dialog.findViewById(R.id.btn_save);
     }
 
     @Override

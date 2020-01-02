@@ -6,4 +6,7 @@
     <string name="buscar">Buscar</string>
     <string name="vistar">Visitar</string>
     <string name="detalhes">Detalhes</string>
+    <string name="titulo">Titulo</string>
+    <string name="desc">Descrição</string>
+    <string name="salvar">Salvar</string>
 </resources>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/new_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/cinza"
+        android:layout_marginTop="@dimen/imag_margin"
+        android:layout_marginLeft="@dimen/imag_margin"
+        android:layout_marginRight="@dimen/imag_margin"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_add_photo"/>
+
+
+    <EditText
+        android:id="@+id/new_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/imag_margin"
+        android:layout_marginRight="@dimen/imag_margin"
+        android:layout_marginTop="30dp"
+        android:hint="@string/titulo"
+        android:layout_below="@id/new_image"
+        />
+
+
+    <EditText
+        android:id="@+id/new_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/imag_margin"
+        android:layout_marginRight="@dimen/imag_margin"
+        android:layout_marginTop="30dp"
+        android:hint="@string/desc"
+        android:layout_below="@id/new_title"
+        />
+
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/imag_margin"
+        android:layout_marginLeft="@dimen/imag_margin"
+        android:background="@color/colorAccent"
+        android:text="@string/salvar"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/white"
+        android:layout_below="@id/new_desc"/>
+
+</RelativeLayout>
