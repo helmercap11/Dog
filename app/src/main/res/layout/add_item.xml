@@ -14,6 +14,7 @@
         android:layout_marginTop="@dimen/imag_margin"
         android:layout_marginLeft="@dimen/imag_margin"
         android:layout_marginRight="@dimen/imag_margin"
+        android:layout_marginBottom="10dp"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_add_photo"/>
 
@@ -24,20 +25,22 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/imag_margin"
         android:layout_marginRight="@dimen/imag_margin"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:hint="@string/titulo"
         android:layout_below="@id/new_image"
         />
 
 
-    <EditText
+     <EditText
         android:id="@+id/new_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/imag_margin"
         android:layout_marginRight="@dimen/imag_margin"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:hint="@string/desc"
+        android:layout_marginBottom="10dp"
         android:layout_below="@id/new_title"
         />
 
@@ -50,8 +53,10 @@
         android:layout_marginLeft="@dimen/imag_margin"
         android:background="@color/colorAccent"
         android:text="@string/salvar"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:textColor="@color/white"
+        android:textStyle="bold"
+        android:layout_marginBottom="10dp"
         android:layout_below="@id/new_desc"/>
 
 </RelativeLayout>

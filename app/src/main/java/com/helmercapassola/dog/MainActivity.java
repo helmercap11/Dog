@@ -1,24 +1,34 @@
 package com.helmercapassola.dog;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.squareup.picasso.Picasso;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,9 +42,11 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
 
+    String ficheiro;
 
 
-   // private  ArrayList<Dog> dogs;
+
+    private  ArrayList<Dog> dogs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-  /*
+
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setHasFixedSize(true);
 
@@ -54,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         adapter = new DogAdapter(dogs, this);
         recyclerView.setAdapter(adapter);
 
-        //imageView = findViewById(R.id.imageview);*/
+        //imageView = findViewById(R.id.imageview);
 
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -77,8 +89,66 @@ public class MainActivity extends AppCompatActivity {
         new_title = dialog.findViewById(R.id.new_title);
         new_desc = dialog.findViewById(R.id.new_desc);
         new_image = dialog.findViewById(R.id.new_image);
+        new_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(isStoragePermissionGrantend()){
+                    Intent gallerIntent = new Intent(Intent.ACTION_PICK);
+                    gallerIntent.setType("image/*"); // expecificar o tipo de ficheiro
+                    startActivityForResult(gallerIntent, 12);
+                }else {
+                    Toast.makeText(MainActivity.this, "Voĉe não tem permissão", Toast.LENGTH_SHORT).show();
+                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 12);
+                }
+
+            }
+        });
         btn_save = dialog.findViewById(R.id.btn_save);
+
+
+        dialog.setTitle("Novo Item");
+        dialog.show();
     }
+
+
+    public  boolean isStoragePermissionGrantend(){
+
+        return ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED;
+    }
+
+
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (data !=null){
+            Uri uri = data.getData();
+            Log.i("MainActivity", "Localização do ficheiro: " + uri.getPath());
+            ficheiro = getRealPathFormURI(uri);
+            File file =  new File(ficheiro);
+            Picasso.get().load(file).into(new_image);
+
+        }
+
+
+    }
+
+    //localizar ficheiro
+
+    public  String getRealPathFormURI(Uri  contentURI){
+
+        Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);
+        cursor.moveToFirst();
+
+        int id = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+        String result = cursor.getString(id);
+        cursor.close();
+        return result;
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
