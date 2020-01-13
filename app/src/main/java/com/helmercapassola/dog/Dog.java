@@ -5,9 +5,9 @@ public class Dog {
 
     private String title;
     private  String desc;
-    private  int image;
+    private  String image;
 
-    public Dog(String title, String desc, int image) {
+    public Dog(String title, String desc, String image) {
         this.title = title;
         this.desc = desc;
         this.image = image;
@@ -21,7 +21,7 @@ public class Dog {
         return desc;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 }

@@ -2,7 +2,9 @@ package com.helmercapassola.dog;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -40,13 +42,14 @@ public class MainActivity extends AppCompatActivity {
     Button btn_save;
 
     RecyclerView recyclerView;
-    RecyclerView.Adapter adapter;
+
+
+    DogAdapter dogAdapter;
 
     String ficheiro;
 
 
-
-    private  ArrayList<Dog> dogs;
+    ArrayList<Dog> dogs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,16 +60,15 @@ public class MainActivity extends AppCompatActivity {
 
 
         recyclerView = findViewById(R.id.recyclerview);
-        recyclerView.setHasFixedSize(true);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        dogs = new ArrayList<Dog>();
+        dogAdapter = new DogAdapter(this);
+        recyclerView.setAdapter(dogAdapter);
 
-        adapter = new DogAdapter(dogs, this);
-        recyclerView.setAdapter(adapter);
+        SharedPreferences preferences = getPreferences(Context.MODE_PRIVATE);
+        String value = preferences.getString("text", "Não tem dados");
 
-        //imageView = findViewById(R.id.imageview);
+        getSupportActionBar().setTitle(value);
 
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -105,10 +107,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         btn_save = dialog.findViewById(R.id.btn_save);
+        btn_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               save();
+            }
+        });
 
 
         dialog.setTitle("Novo Item");
         dialog.show();
+    }
+
+    public void  save(){
+
+
+        String title = new_title.getText().toString();
+        String desc = new_desc.getText().toString();
+        dogAdapter.dogList.add(new Dog(title,desc,ficheiro));
+        dogAdapter.notifyDataSetChanged();
+        DogSharedPreferences.saveDotList(dogAdapter.dogList, MainActivity.this, "dogList");
+        ficheiro = null;
+        dialog.dismiss();
     }
 
 

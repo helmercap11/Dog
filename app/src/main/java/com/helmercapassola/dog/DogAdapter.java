@@ -10,17 +10,27 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DogAdapter extends RecyclerView.Adapter<DogAdapter.ViewHolder> {
 
 
-    private List<Dog> dogList;
-    private Context context;
+    List<Dog> dogList;
+    Context context;
 
-    public DogAdapter(List<Dog> dogList, Context context) {
-        this.dogList = dogList;
-        this.context = context;
+    public DogAdapter( Context ctx) {
+        this.dogList = new ArrayList<>();
+        this.context = ctx;
+
+
+        List<Dog> saveDogList = DogSharedPreferences.loadDog(context, "dogList");
+        if (saveDogList != null){
+            dogList.addAll(saveDogList);
+        }
     }
 
     @NonNull
@@ -40,7 +50,8 @@ public class DogAdapter extends RecyclerView.Adapter<DogAdapter.ViewHolder> {
 
         holder.txt_title.setText(dog.getTitle());
         holder.txt_desc.setText(dog.getDesc());
-        holder.imageView.setImageResource(dog.getImage());
+        //holder.imageView.setImageResource(dog.getImage());
+        Picasso.get().load(new File(String.valueOf(dog.getImage()))).into(holder.imageView);
         }
 
     @Override
